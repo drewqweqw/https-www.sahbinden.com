@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otomatik Konum Alma ve Kedi Resmi</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #catImage {
+            display: none; /* Başlangıçta gizli */
+            margin-top: 20px;
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            // Sayfa yüklendiğinde konum bilgisini al
+            getLocation();
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                // Konum alımını başlat
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                console.error("Geolocation tarayıcı tarafından desteklenmiyor.");
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            // Konum bilgilerini işlemek için buraya kod ekleyebilirsiniz
+            console.log("Enlem: " + latitude + ", Boylam: " + longitude);
+
+            // Kedi resmini göster
+            document.getElementById('catImage').style.display = 'block';
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    console.error("Kullanıcı konum iznini reddetti.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    console.error("Konum bilgisi kullanılamıyor.");
+                    break;
+                case error.TIMEOUT:
+                    console.error("Konum isteği zaman aşımına uğradı.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    console.error("Bilinmeyen bir hata oluştu.");
+                    break;
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Kedi resmini göstermek için bir <img> etiketi ekleyin -->
+    <img id="catImage" src="https://placekitten.com/800/600" alt="Kedi Resmi">
+</body>
+</html>
